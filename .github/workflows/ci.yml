@@ -209,8 +209,8 @@ jobs:
       - name: Build Python bindings
         run: |
           python3 -m venv "$PREFIX/venv"
-          "$PREFIX/venv/bin/python" -m pip install --upgrade \
-            pip setuptools wheel pytest pytest-benchmark pytest-regtest pytz tzlocal
+          "$PREFIX/venv/bin/python" -m pip install --upgrade pip setuptools wheel
+          "$PREFIX/venv/bin/python" -m pip install -r test/requirements.txt
           CMAKE_PREFIX_PATH="$PREFIX" \
             CMAKE_BUILD_PARALLEL_LEVEL=2 \
             "$PREFIX/venv/bin/python" -m pip install ./blockscipy

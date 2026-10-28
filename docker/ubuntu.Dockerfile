@@ -50,14 +50,11 @@ COPY --chown=$USER_UID:$USER_GID scripts/install-unpackaged-deps.sh /tmp/install
 RUN bash /tmp/install-unpackaged-deps.sh "$PREFIX" \
  && rm /tmp/install-unpackaged-deps.sh
 
+COPY --chown=$USER_UID:$USER_GID test/requirements.txt /tmp/test-requirements.txt
+
 RUN python3 -m venv "$VIRTUAL_ENV" \
  && "$VIRTUAL_ENV/bin/python" -m pip install --upgrade pip setuptools wheel \
- && "$VIRTUAL_ENV/bin/python" -m pip install \
-      pytest \
-      pytest-benchmark \
-      pytest-regtest \
-      pytz \
-      tzlocal
+ && "$VIRTUAL_ENV/bin/python" -m pip install -r /tmp/test-requirements.txt
 
 COPY --chown=$USER_UID:$USER_GID . .
 
